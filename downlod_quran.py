@@ -94,5 +94,7 @@ for r in reciters_data:
                 f.write(requests.get(r["Server"] + "/" + sura_number + ".mp3").content)
                 f.close()
 
+        print("Finished Downloading.")
+
 if not reciter_found:
     print("{0} is not a valid reciter id.".format(reciter_id))
