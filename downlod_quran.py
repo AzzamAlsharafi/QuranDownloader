@@ -30,6 +30,9 @@ for r in range(0, len(data), 3):
         get_formatted_lang(r + 2)
     ))
 
+print("\nNOTE: The different languages are for the names of downloaded files only,\n"
+      "the recitation itself will be in Arabic language.")
+
 lang_index = int(input("Enter language's id: ")) - 1
 
 if not (0 <= lang_index < len(data)):
