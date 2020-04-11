@@ -1,5 +1,6 @@
 import os
 import requests
+import sys
 
 response = requests.get("http://mp3quran.net/api/get_json.php")
 data = response.json()["language"]
@@ -28,6 +29,10 @@ for r in range(0, len(data), 3):
     ))
 
 lang_index = int(input("Enter language's id: ")) - 1
+
+if not (0 <= lang_index < len(data)):
+    print("{0} is not a valid language id.".format(lang_index + 1))
+    sys.exit()
 
 reciters_link = data[lang_index]["json"]
 suras_link = data[lang_index]["sura_name"]
