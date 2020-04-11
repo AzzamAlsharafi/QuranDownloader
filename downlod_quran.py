@@ -63,7 +63,9 @@ for r in reciters_data:
             os.mkdir(dir_path)
 
         suras = r["suras"].split(",")
-        print("({0}) {1}%".format(" " * 100, 0), end="\r", flush=False)  # Print an empty loading bar.
+        answer = input("{0} Suras available for {1}. Continue? [Y/N]\n".format(len(suras), r_name))
+        if answer.lower() == "n":
+            sys.exit()
 
         for n in range(len(suras)):
             number = str(suras[n]).rjust(3, "0")
