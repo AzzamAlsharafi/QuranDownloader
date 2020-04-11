@@ -56,8 +56,12 @@ for r in range(0, len(reciters_data) - 1, 2):
 # Convert input to int, then to string to remove any trailing zeros.
 reciter_id = str(int(input("Enter reciters' id: ")))
 
+reciter_found = False
+
 for r in reciters_data:
     if r["id"] == reciter_id:
+        reciter_found = True
+
         r_name = "{0} ({1})".format(r["name"], r["rewaya"])
         suras = r["suras"].split(",")
         answer = input("{0} Suras available for {1}. Continue? [Y/N]\n".format(len(suras), r_name))
@@ -83,3 +87,6 @@ for r in reciters_data:
                 f = open(file_name, "wb")
                 f.write(requests.get(r["Server"] + "/" + sura_number + ".mp3").content)
                 f.close()
+
+if not reciter_found:
+    print("{0} is not a valid reciter id.".format(reciter_id))
