@@ -51,7 +51,7 @@ path = input("Enter path: ")
 for r in reciters_data:
     if r["id"] == reciter_id:
         r_name = "{0} ({1})".format(r["name"], r["rewaya"])
-        dir_path = "{0}\\{1}".format(path, r_name)
+        dir_path = os.path.join(path, r_name)
 
         # Check if dir_path exist, and create it otherwise.
         if not os.path.isdir(dir_path):
@@ -62,8 +62,8 @@ for r in reciters_data:
 
         for n in range(len(suras)):
             number = str(suras[n]).rjust(3, "0")
-            file_name = "{0}\\{1} - {2}.mp3".format(dir_path, number,
-                                                    suras_data[int(suras[n]) - 1]["name"].replace("\r\n", ""))
+            name = "{0} - {1}.mp3".format(number, suras_data[int(suras[n]) - 1]["name"].replace("\r\n", ""))
+            file_name = os.path.join(dir_path, name)
             if not os.path.exists(file_name) or os.stat(file_name).st_size == 0:
                 f = open(file_name, "wb")
                 f.write(requests.get(r["Server"] + "/" + number + ".mp3").content)
