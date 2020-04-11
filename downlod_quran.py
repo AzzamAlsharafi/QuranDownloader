@@ -67,6 +67,9 @@ for r in reciters_data:
         answer = input("{0} Suras available for {1}. Continue? [Y/N]\n".format(len(suras), r_name))
         if answer.lower() == "n":
             sys.exit()
+        elif not answer.lower() == "y":
+            print("Your answer is not valid. Exiting...")
+            sys.exit()
 
         path = input("Enter path: ")
         dir_path = os.path.join(path, r_name)
