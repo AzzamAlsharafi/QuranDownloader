@@ -2,6 +2,8 @@ import os
 import requests
 import sys
 
+print("Loading languages...\n")
+
 response = requests.get("http://mp3quran.net/api/get_json.php")
 data = response.json()["language"]
 
@@ -33,6 +35,8 @@ lang_index = int(input("Enter language's id: ")) - 1
 if not (0 <= lang_index < len(data)):
     print("{0} is not a valid language id.".format(lang_index + 1))
     sys.exit()
+
+print("Loading reciters...\n")
 
 reciters_link = data[lang_index]["json"]
 suras_link = data[lang_index]["sura_name"]
@@ -68,12 +72,14 @@ for r in reciters_data:
             sys.exit()
 
         for n in range(len(suras)):
-            number = str(suras[n]).rjust(3, "0")
-            name = "{0} - {1}.mp3".format(number, suras_data[int(suras[n]) - 1]["name"].replace("\r\n", ""))
+            sura_number = str(suras[n]).rjust(3, "0")
+            sura_name = suras_data[int(suras[n]) - 1]["name"].replace("\r\n", "")
+            name = "{0} - {1}.mp3".format(sura_number, sura_name)
             file_name = os.path.join(dir_path, name)
+
+            # Check if Sura has already been downloaded, and download it otherwise.
             if not os.path.exists(file_name) or os.stat(file_name).st_size == 0:
+                print("Downloading {0}...".format(name))
                 f = open(file_name, "wb")
-                f.write(requests.get(r["Server"] + "/" + number + ".mp3").content)
+                f.write(requests.get(r["Server"] + "/" + sura_number + ".mp3").content)
                 f.close()
-            print("({0}{1}) {2}%".format("-" * (n * 100 // len(suras)), " " * ((len(suras) - n) * 100 // len(suras)),
-                                         n * 100 // len(suras)), end="\r", flush=False)
