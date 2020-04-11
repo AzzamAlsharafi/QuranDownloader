@@ -55,21 +55,21 @@ for r in range(0, len(reciters_data) - 1, 2):
 
 # Convert input to int, then to string to remove any trailing zeros.
 reciter_id = str(int(input("Enter reciters' id: ")))
-path = input("Enter path: ")
 
 for r in reciters_data:
     if r["id"] == reciter_id:
         r_name = "{0} ({1})".format(r["name"], r["rewaya"])
+        suras = r["suras"].split(",")
+        answer = input("{0} Suras available for {1}. Continue? [Y/N]\n".format(len(suras), r_name))
+        if answer.lower() == "n":
+            sys.exit()
+
+        path = input("Enter path: ")
         dir_path = os.path.join(path, r_name)
 
         # Check if dir_path exist, and create it otherwise.
         if not os.path.isdir(dir_path):
             os.mkdir(dir_path)
-
-        suras = r["suras"].split(",")
-        answer = input("{0} Suras available for {1}. Continue? [Y/N]\n".format(len(suras), r_name))
-        if answer.lower() == "n":
-            sys.exit()
 
         for n in range(len(suras)):
             sura_number = str(suras[n]).rjust(3, "0")
